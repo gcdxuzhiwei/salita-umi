@@ -13,7 +13,7 @@ function Umi() {
     };
   }, []);
 
-  return <div>hhhh</div>;
+  return <div>首页跳转</div>;
 }
 
 export default Umi;
