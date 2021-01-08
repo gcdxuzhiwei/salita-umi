@@ -39,23 +39,26 @@ export default () => {
   };
 
   return (
-    <Upload
-      name="avatar"
-      listType="picture-card"
-      className="avatar-uploader"
-      showUploadList={false}
-      action="/api/user/upload"
-      beforeUpload={beforeUpload}
-      onChange={handleChange}
-    >
-      {imageUrl ? (
-        <img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
-      ) : (
-        <div>
-          {loading ? <LoadingOutlined /> : <PlusOutlined />}
-          <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-      )}
-    </Upload>
+    <>
+      <Upload
+        name="avatar"
+        listType="picture-card"
+        className="avatar-uploader"
+        showUploadList={false}
+        action="/api/upload"
+        beforeUpload={beforeUpload}
+        onChange={handleChange}
+      >
+        {imageUrl ? (
+          <img src={imageUrl} alt="avatar" style={{ width: '100%' }} />
+        ) : (
+          <div>
+            {loading ? <LoadingOutlined /> : <PlusOutlined />}
+            <div style={{ marginTop: 8 }}>Upload</div>
+          </div>
+        )}
+      </Upload>
+      <img src="161012256495861yfih6guig.png" />
+    </>
   );
 };
