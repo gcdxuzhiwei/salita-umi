@@ -8,16 +8,16 @@ export default defineConfig({
   styles: ['http://at.alicdn.com/t/font_2160910_atovnysy6f.css'],
   routes: [
     {
-      path: '/index',
+      path: '/main',
       exact: true,
-      redirect: '/index/home',
+      redirect: '/main/home',
     },
     {
-      path: '/index',
-      component: '@/pages/index/index',
+      path: '/main',
+      component: '@/pages/main',
       routes: [
-        { path: '/index/home', exact: true, component: '@/pages/index/home' },
-        { path: '/index/mine', exact: true, component: '@/pages/index/mine' },
+        { path: '/main/home', exact: true, component: '@/pages/main/home' },
+        { path: '/main/mine', exact: true, component: '@/pages/main/mine' },
         { path: '*', component: '@/pages/wrong' },
       ],
     },

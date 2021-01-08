@@ -6,7 +6,7 @@ let Timeout;
 function Umi() {
   useEffect(() => {
     Timeout = setTimeout(() => {
-      history.push('/index/home');
+      history.push('/main/home');
     }, 2000);
     return () => {
       window.clearTimeout(Timeout);

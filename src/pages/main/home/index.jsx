@@ -10,7 +10,7 @@ function Home() {
       <Button loading={true} activeStyle={false}>
         123
       </Button>
-      <i className='iconfont fullscreen-exit'></i>
+      <i className="iconfont fullscreen-exit"></i>
       <HomeOutlined />
       <Link to="/detail">sad</Link>
       <div>{window.sessionStorage.getItem('qwe') || 12}</div>
