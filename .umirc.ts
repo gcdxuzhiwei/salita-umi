@@ -4,8 +4,7 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  title: '某知名家教服务平台',
-  styles: ['http://at.alicdn.com/t/font_2160910_atovnysy6f.css'],
+  title: '家教服务平台',
   proxy: {
     '/api': {
       target: 'http://127.0.0.1:7001/',
@@ -28,6 +27,10 @@ export default defineConfig({
       ],
     },
     {
+      path: '/login',
+      component: '@/pages/login',
+    },
+    {
       path: '/detail',
       component: '@/pages/detail',
     },
@@ -38,6 +41,10 @@ export default defineConfig({
     {
       path: '/demo/register',
       component: '@/pages/demo/register',
+    },
+    {
+      path: '/demo/re',
+      component: '@/pages/demo/demo',
     },
     {
       path: '/',
