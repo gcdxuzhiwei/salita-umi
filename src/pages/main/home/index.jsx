@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'umi';
+import { Link, history } from 'umi';
 import { Button } from 'antd-mobile';
 import { HomeOutlined } from '@ant-design/icons';
 
@@ -7,8 +7,12 @@ function Home() {
   console.log('dfeasf');
   return (
     <div>
-      <Button loading={true} activeStyle={false}>
-        123
+      <Button
+        loading={true}
+        activeStyle={false}
+        onClick={() => history.push('/login')}
+      >
+        点击注册
       </Button>
       <i className="iconfont fullscreen-exit"></i>
       <HomeOutlined />

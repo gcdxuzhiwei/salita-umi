@@ -1,17 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { history } from 'umi';
 import '../../utils/jigsaw.min.js';
 import { logo } from '../../utils/const';
 import styles from './index.less';
 import axios from 'axios';
-import { Tabs, InputItem, Button, Modal, Toast } from 'antd-mobile';
+import { Tabs, InputItem, Button, Modal, Toast, Checkbox } from 'antd-mobile';
 
 const tabs = [{ title: '登录' }, { title: '注册' }];
 
 function Login() {
   const [page, setPage] = useState(0);
   // 登录
-  const [leftPhone, setleftPhone] = useState('');
-  const [leftPassword, setleftPassword] = useState('');
+  const [leftPhone, setLeftPhone] = useState('');
+  const [leftPassword, setLeftPassword] = useState('');
+  const [leftCheck, setLeftCheck] = useState(false);
   // 注册
   const [rightPhone, setRightPhone] = useState('');
   const [rightPassword1, setRightPassword1] = useState('');
@@ -36,6 +38,36 @@ function Login() {
       });
     }
   }, [rightModal]);
+
+  const handleLeft = async () => {
+    if (!verifyPhone(leftPhone) || !verifyPassword(leftPassword)) {
+      Toast.fail('请输入正确的手机号和密码', 1);
+    } else {
+      try {
+        Toast.loading('登录中', 60);
+        const { data } = await axios.post('/api/user/login', {
+          phone: formatPhone(leftPhone),
+          password: leftPassword,
+          save: leftCheck,
+        });
+        if (data.success) {
+          Toast.loading('登录成功，1秒后跳转', 1);
+          const clear = setTimeout(() => {
+            if (history.length <= 2) {
+              history.push('/');
+            } else {
+              history.goBack();
+            }
+            clearTimeout(clear);
+          }, 900);
+        } else {
+          Toast.fail(data.err, 1);
+        }
+      } catch {
+        Toast.fail('网络异常', 1);
+      }
+    }
+  };
 
   const handleRight = async () => {
     if (!rightAble) {
@@ -99,7 +131,37 @@ function Login() {
         <img src={logo} />
       </div>
       <Tabs tabs={tabs} page={page} onChange={(v, i) => setPage(i)}>
-        <div className={styles.main}>Content of third tab</div>
+        <div className={styles.main}>
+          <InputItem
+            type="phone"
+            clear
+            value={leftPhone}
+            placeholder="请输入手机号"
+            onChange={e => setLeftPhone(e)}
+          >
+            手机号
+          </InputItem>
+          <InputItem
+            type="password"
+            clear
+            value={leftPassword}
+            placeholder="请输入密码"
+            onChange={e => setLeftPassword(e)}
+          >
+            密码
+          </InputItem>
+          <div className={styles.check}>
+            <Checkbox
+              checked={leftCheck}
+              onChange={() => setLeftCheck(v => !v)}
+            >
+              七天内自动登录
+            </Checkbox>
+          </div>
+          <Button className={styles.button} type="primary" onClick={handleLeft}>
+            登录
+          </Button>
+        </div>
         <div className={styles.main}>
           <InputItem
             type="phone"
