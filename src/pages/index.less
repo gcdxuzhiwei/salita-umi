@@ -1,0 +1,75 @@
+.tip{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 5px 15px;
+  color: #888;
+  background-color: rgba(0,0,0,0.1);
+  border-radius: 4px;
+}
+
+.logo {
+  position: fixed;
+  bottom: calc(50% + 20px);
+  left: 50%;
+  transform: translate(-50%) rotate(360deg);
+  animation: myfirst 1s;
+}
+
+.name {
+  position: fixed;
+  top: 50%;
+  font-size: 30px;
+  font-weight: 600;
+  height: 39.2px;
+  width: 100%;
+  span {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: mySecond 1s;
+  }
+}
+
+.power {
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  color: #666;
+  transform: translateX(-50%);
+  font-size: 10px;
+  animation: myThird 2s;
+}
+
+@keyframes myfirst {
+  0% {
+    bottom: calc(100% - 0px);
+    transform: translate(-50%) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%) rotate(180deg);
+  }
+  100% {
+    bottom: calc(50% + 20px);
+    transform: translate(-50%) rotate(360deg);
+  }
+}
+
+@keyframes mySecond {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 50%;
+  }
+}
+
+@keyframes myThird {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

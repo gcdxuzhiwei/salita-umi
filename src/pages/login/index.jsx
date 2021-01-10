@@ -3,7 +3,7 @@ import { history } from 'umi';
 import '../../utils/jigsaw.min.js';
 import { logo } from '../../utils/const';
 import styles from './index.less';
-import axios from 'axios';
+import axios from '../../utils/axios';
 import { Tabs, InputItem, Button, Modal, Toast, Checkbox } from 'antd-mobile';
 
 const tabs = [{ title: '登录' }, { title: '注册' }];

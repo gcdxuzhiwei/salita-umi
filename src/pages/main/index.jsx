@@ -13,6 +13,7 @@ function Index(props) {
       window.clearInterval(Interval);
     };
   }, []);
+  console.log(props);
 
   return (
     <div>
