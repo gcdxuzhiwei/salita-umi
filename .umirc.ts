@@ -47,6 +47,10 @@ export default defineConfig({
       component: '@/pages/demo/demo',
     },
     {
+      path: '/demo/ws',
+      component: '@/pages/demo/ws',
+    },
+    {
       path: '/',
       component: '@/pages/index',
     },
