@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { Link } from 'umi';
+import { getUmiCookie } from '@/utils/const';
 
 function Mine() {
-  return <div>4</div>;
+  const login = useRef(!!getUmiCookie());
+
+  return (
+    <>
+      {!login.current ? (
+        <Link to="/login">登录/注册</Link>
+      ) : (
+        <>
+          <img src="/defaultAvatar.png" alt="" />
+        </>
+      )}
+    </>
+  );
 }
 
 export default Mine;

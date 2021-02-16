@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { history } from 'umi';
-import '../../utils/jigsaw.min.js';
+import '@/utils/jigsaw.min.js';
 import { logo } from '../../utils/const';
 import styles from './index.less';
 import axios from '@/utils/axios';

@@ -31,8 +31,8 @@ function Index(props) {
   ]);
 
   return (
-    <div>
-      <div>{props.children}</div>
+    <div className={styles.page}>
+      {props.children}
       <div className={styles.tabs}>
         {tab.map(v => (
           <Link
