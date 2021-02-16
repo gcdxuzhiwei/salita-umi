@@ -1,36 +1,49 @@
-import React, { useEffect } from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'umi';
 import styles from './index.less';
 
-let Interval;
+const tab = [
+  {
+    icon: 'icon-zhaokecheng',
+    name: '找家教',
+    path: '/main/home',
+  },
+  {
+    icon: 'icon-laoshi',
+    name: '做家教',
+    path: '/main/teacher',
+  },
+  {
+    icon: 'icon-xiaoxi',
+    name: '消息',
+    path: '/main/message',
+  },
+  {
+    icon: 'icon-wode1',
+    name: '我的',
+    path: '/main/mine',
+  },
+];
 
 function Index(props) {
-  useEffect(() => {
-    Interval = setInterval(() => {
-      console.log(222);
-    }, 500);
-    return () => {
-      window.clearInterval(Interval);
-    };
-  }, []);
-  console.log(props);
+  const pathname = useMemo(() => props.location.pathname, [
+    props.location.pathname,
+  ]);
 
   return (
     <div>
       <div>{props.children}</div>
       <div className={styles.tabs}>
-        <Link to="/main/home">
-          <i className="iconfont icon-zhaokecheng"></i>找家教
-        </Link>
-        <Link to="/main/teacher">
-          <i className="iconfont icon-laoshi"></i>做家教
-        </Link>
-        <Link to="/main/message">
-          <i className="iconfont icon-xiaoxi"></i>消息
-        </Link>
-        <Link to="/main/mine">
-          <i className="iconfont icon-wode"></i>我的
-        </Link>
+        {tab.map(v => (
+          <Link
+            to={v.path}
+            key={v.path}
+            className={pathname === v.path ? styles.active : ''}
+          >
+            <i className={`iconfont ${v.icon}`}></i>
+            {v.name}
+          </Link>
+        ))}
       </div>
     </div>
   );
