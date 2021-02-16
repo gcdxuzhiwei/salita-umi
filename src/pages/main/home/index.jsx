@@ -4,7 +4,6 @@ import { Button } from 'antd-mobile';
 import { HomeOutlined } from '@ant-design/icons';
 
 function Home() {
-  console.log('dfeasf');
   return (
     <div>
       <Button
@@ -14,7 +13,6 @@ function Home() {
       >
         点击注册
       </Button>
-      <i className="iconfont fullscreen-exit"></i>
       <HomeOutlined />
       <Link to="/detail">sad</Link>
       <div>{window.sessionStorage.getItem('qwe') || 12}</div>

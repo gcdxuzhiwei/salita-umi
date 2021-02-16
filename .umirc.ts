@@ -23,6 +23,16 @@ export default defineConfig({
       routes: [
         { path: '/main/home', exact: true, component: '@/pages/main/home' },
         { path: '/main/mine', exact: true, component: '@/pages/main/mine' },
+        {
+          path: '/main/teacher',
+          exact: true,
+          component: '@/pages/main/teacher',
+        },
+        {
+          path: '/main/message',
+          exact: true,
+          component: '@/pages/main/message',
+        },
         { path: '*', component: '@/pages/wrong' },
       ],
     },

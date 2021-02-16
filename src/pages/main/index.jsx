@@ -19,8 +19,18 @@ function Index(props) {
     <div>
       <div>{props.children}</div>
       <div className={styles.tabs}>
-        <Link to="/index/home"></Link>
-        <Link to="/index/mine">Users Page</Link>
+        <Link to="/main/home">
+          <i className="iconfont icon-zhaokecheng"></i>找家教
+        </Link>
+        <Link to="/main/teacher">
+          <i className="iconfont icon-laoshi"></i>做家教
+        </Link>
+        <Link to="/main/message">
+          <i className="iconfont icon-xiaoxi"></i>消息
+        </Link>
+        <Link to="/main/mine">
+          <i className="iconfont icon-wode"></i>我的
+        </Link>
       </div>
     </div>
   );

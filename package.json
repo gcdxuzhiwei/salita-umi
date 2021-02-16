@@ -25,7 +25,6 @@
     "@umijs/test": "^3.3.1",
     "antd-mobile": "^2.3.4",
     "axios": "^0.21.1",
-    "egg-socket.io": "^4.1.6",
     "lint-staged": "^10.0.7",
     "moment": "^2.29.1",
     "prettier": "^1.19.1",
