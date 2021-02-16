@@ -10,6 +10,11 @@ export default defineConfig({
       target: 'http://127.0.0.1:7001/',
       changeOrigin: true,
     },
+    '/public': {
+      target: 'http://127.0.0.1:1111/',
+      changeOrigin: true,
+      pathRewrite: { '^/public': '' },
+    },
   },
   routes: [
     {

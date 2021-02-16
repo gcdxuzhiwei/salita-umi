@@ -11,7 +11,7 @@ function Mine() {
         <Link to="/login">登录/注册</Link>
       ) : (
         <>
-          <img src="/defaultAvatar.png" alt="" />
+          <img src="/public/defaultAvatar.png" alt="" />
         </>
       )}
     </>
