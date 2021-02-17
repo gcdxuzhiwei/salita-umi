@@ -16,6 +16,7 @@ export default defineConfig({
       pathRewrite: { '^/public': '' },
     },
   },
+  hash: true,
   routes: [
     {
       path: '/main',
