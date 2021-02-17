@@ -27,5 +27,27 @@
 
   .active {
     color: #0084c9;
+
+    i {
+      animation: bigger 0.3s;
+    }
+  }
+}
+
+@keyframes bigger {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.5);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
   }
 }
