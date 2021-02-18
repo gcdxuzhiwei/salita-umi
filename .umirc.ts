@@ -50,6 +50,10 @@ export default defineConfig({
       component: '@/pages/login',
     },
     {
+      path: '/join',
+      component: '@/pages/join',
+    },
+    {
       path: '/detail',
       component: '@/pages/detail',
     },

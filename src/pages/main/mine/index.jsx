@@ -69,6 +69,22 @@ function Mine() {
               )}
             </div>
           </Spin>
+
+          <div className={styles.list}>
+            <Link to="/join">
+              <span>
+                <i className="iconfont icon-jiarujiazuxianxing"></i>教员入驻
+              </span>
+              <i className="iconfont icon-Group-"></i>
+            </Link>
+            <Link to="/login">
+              <span>
+                <i className="iconfont icon-jiaohuan"></i>切换用户
+              </span>
+              <i className="iconfont icon-Group-"></i>
+            </Link>
+          </div>
+
           <Modal
             visible={changeModal}
             transparent
