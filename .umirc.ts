@@ -6,14 +6,17 @@ export default defineConfig({
   },
   title: '家教服务平台',
   proxy: {
+    '/api/upload': {
+      target: 'http://www.xuzhiwei.icu/',
+      changeOrigin: true,
+    },
     '/api': {
       target: 'http://127.0.0.1:7001/',
       changeOrigin: true,
     },
     '/public': {
-      target: 'http://127.0.0.1:1111/',
+      target: 'http://www.xuzhiwei.icu/',
       changeOrigin: true,
-      pathRewrite: { '^/public': '' },
     },
   },
   hash: true,
