@@ -10,3 +10,39 @@ export const getUmiCookie = (str = 'umiId') => {
     }
   }
 };
+
+import areaData from 'china-area-data/data';
+const areaRange = [];
+const start = areaData[86];
+const getChildren = k => {
+  if (!areaData[k]) {
+    return null;
+  } else {
+    const childRange = [];
+    const childData = areaData[k];
+    for (let key in childData) {
+      childRange.push({
+        value: key,
+        label: childData[key],
+        children: getChildren(key),
+      });
+    }
+    return childRange;
+  }
+};
+for (let key in start) {
+  areaRange.push({
+    value: key,
+    label: start[key],
+    children: getChildren(key),
+  });
+}
+export const allArea = areaRange;
+
+export const getAreaName = arr => {
+  const first = areaRange.find(v => v.value === arr[0]);
+  const second = first.children.find(v => v.value === arr[1]);
+  const third = second.children.find(v => v.value === arr[2]);
+  console.log(first, second, third);
+  return [first.label, second.label, third.label].join('/');
+};
