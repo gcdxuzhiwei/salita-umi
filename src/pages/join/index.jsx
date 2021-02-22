@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'umi';
 import { Spin } from 'antd';
-import { Steps, WhiteSpace, Toast } from 'antd-mobile';
+import { Steps, WhiteSpace, Toast, SegmentedControl } from 'antd-mobile';
 import axios from '@/utils/axios';
 import styles from './index.less';
 
@@ -55,7 +55,14 @@ function Join() {
           ))}
         </Steps>
       </Spin>
-      {!loading && state === 0 && <div>12</div>}
+      {!loading && state === 0 && (
+        <div className={styles.field}>
+          <div className={styles.role}>
+            教员身份:
+            <SegmentedControl values={['在校学生', '在职教师']} />
+          </div>
+        </div>
+      )}
       {!loading && state !== 0 && (
         <Link className={styles.link} to="/main">
           回到首页
