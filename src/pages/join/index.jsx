@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'umi';
-import { Spin, Upload } from 'antd';
+import { Spin, Upload, message, Button } from 'antd';
 import { Steps, WhiteSpace, Toast, SegmentedControl } from 'antd-mobile';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import axios from '@/utils/axios';
@@ -29,6 +29,7 @@ function Join() {
   const [isTeacher, setIsTeacher] = useState(0);
   const [imageLoading, setImageLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
+  const [submitLoading, setSubmitLoading] = useState(false);
 
   useEffect(() => {
     getState();
@@ -63,6 +64,29 @@ function Join() {
       const { data } = await axios.post('/api/user/joinState');
       setState(data.state);
       setLoading(false);
+    } catch {
+      Toast.fail('网络异常', 1);
+    }
+  };
+
+  const submit = async () => {
+    if (!imageUrl) {
+      Toast.fail('请先上传手持证件照');
+      return;
+    }
+    try {
+      setSubmitLoading(true);
+      const { data } = await axios.post('/api/user/teacherJoin', {
+        isTeacher,
+        imageUrl,
+      });
+      if (data.success) {
+        setSubmitLoading(false);
+        setState(-1);
+        getState();
+      } else {
+        Toast.fail(data.err);
+      }
     } catch {
       Toast.fail('网络异常', 1);
     }
@@ -114,6 +138,11 @@ function Join() {
                 )}
               </div>
             </Upload>
+          </div>
+          <div className={styles.submit}>
+            <Button loading={submitLoading} onClick={submit} type="primary">
+              提交审核
+            </Button>
           </div>
         </div>
       )}
