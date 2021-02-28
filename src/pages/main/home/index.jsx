@@ -10,7 +10,7 @@ function Home() {
         源码点击跳转github
         <GithubOutlined />
       </a>
-      后台admin端口800
+      后台admin路由为/admin
     </NoticeBar>
   );
 }

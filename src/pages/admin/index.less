@@ -1,0 +1,53 @@
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  background-color: fade(#0084c9, 15%);
+  padding-right: 40px;
+
+  .icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & > span {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+.page {
+  position: relative;
+  height: calc(100vh - 40px);
+  width: 100vw;
+  overflow: auto;
+  max-width: 100%;
+
+  :global {
+    .ant-drawer {
+      top: 40px;
+
+      .ant-drawer-mask {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+
+      .ant-drawer-body {
+        div {
+          text-align: center;
+          height: 25px;
+          line-height: 25px;
+        }
+
+        :local {
+          .nav {
+            color: #0084c9;
+          }
+        }
+      }
+    }
+  }
+}

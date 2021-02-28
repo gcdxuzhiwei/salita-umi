@@ -27,6 +27,11 @@ export default defineConfig({
       redirect: '/main/home',
     },
     {
+      path: '/admin',
+      exact: true,
+      redirect: '/admin/home',
+    },
+    {
       path: '/main',
       component: '@/pages/main',
       routes: [
@@ -42,6 +47,14 @@ export default defineConfig({
           exact: true,
           component: '@/pages/main/message',
         },
+        { path: '*', component: '@/pages/wrong' },
+      ],
+    },
+    {
+      path: '/admin',
+      component: '@/pages/admin',
+      routes: [
+        { path: '/admin/home', exact: true, component: '@/pages/admin/home' },
         { path: '*', component: '@/pages/wrong' },
       ],
     },
