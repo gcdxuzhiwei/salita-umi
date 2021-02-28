@@ -32,7 +32,7 @@ function Admin(props) {
     if (login) {
       getRole();
     }
-  }, []);
+  }, [login]);
 
   const getRole = async () => {
     try {
