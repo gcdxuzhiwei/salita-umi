@@ -11,10 +11,29 @@
   .role {
     display: flex;
     padding-left: 12px;
+    justify-content: space-between;
 
     & > div {
       flex: 1;
       padding: 0 32px 0 12px;
+      max-width: 200px;
+    }
+  }
+
+  .line {
+    width: 100%;
+    padding: 12px 32px 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .input {
+      width: 240px;
+      background-color: transparent;
+
+      input {
+        text-align: end;
+      }
     }
   }
 

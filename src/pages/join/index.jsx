@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'umi';
 import { Spin, Upload, message, Button } from 'antd';
-import { Steps, WhiteSpace, Toast, SegmentedControl } from 'antd-mobile';
+import {
+  Steps,
+  WhiteSpace,
+  Toast,
+  SegmentedControl,
+  InputItem,
+} from 'antd-mobile';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import axios from '@/utils/axios';
 import styles from './index.less';
@@ -27,6 +33,9 @@ function Join() {
   const [state, setState] = useState(-1);
   const [loading, setLoading] = useState(true);
   const [isTeacher, setIsTeacher] = useState(0);
+  const [school, setSchool] = useState('');
+  const [profession, setProfession] = useState('');
+  const [level, setLevel] = useState(0);
   const [imageLoading, setImageLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -70,8 +79,8 @@ function Join() {
   };
 
   const submit = async () => {
-    if (!imageUrl) {
-      Toast.fail('请先上传手持证件照');
+    if (!imageUrl || !school || !profession) {
+      Toast.fail('请先填写资料');
       return;
     }
     try {
@@ -79,6 +88,9 @@ function Join() {
       const { data } = await axios.post('/api/user/teacherJoin', {
         isTeacher,
         imageUrl,
+        school,
+        profession,
+        level,
       });
       if (data.success) {
         setSubmitLoading(false);
@@ -115,6 +127,38 @@ function Join() {
               selectedIndex={isTeacher}
               onChange={e => {
                 setIsTeacher(e.nativeEvent.selectedSegmentIndex);
+              }}
+            />
+          </div>
+          <div className={styles.line}>
+            院校:
+            <InputItem
+              value={school}
+              onChange={e => {
+                setSchool(e);
+              }}
+              placeholder="请输入院校"
+              className={styles.input}
+            />
+          </div>
+          <div className={styles.line}>
+            专业:
+            <InputItem
+              value={profession}
+              onChange={e => {
+                setProfession(e);
+              }}
+              placeholder="请输入专业"
+              className={styles.input}
+            />
+          </div>
+          <div className={styles.role}>
+            学历:
+            <SegmentedControl
+              values={['本科', '研究生']}
+              selectedIndex={level}
+              onChange={e => {
+                setLevel(e.nativeEvent.selectedSegmentIndex);
               }}
             />
           </div>
