@@ -44,6 +44,10 @@ function ChangeInfo(props, ref) {
 
   const handleChange = async () => {
     try {
+      if (!newInfo.name || !newInfo.age || !newInfo.area) {
+        Toast.fail('请先完善信息');
+        return;
+      }
       Toast.loading('上传中', 60);
       const { data } = await axios.post('/api/user/changeInfo', newInfo);
       if (data.err) {
