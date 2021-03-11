@@ -4,5 +4,141 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: pink;
+
+  .title {
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    height: 42px;
+    position: absolute;
+    padding: 0 5px;
+    top: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    img {
+      height: 36px;
+      width: auto;
+    }
+  }
+
+  .list {
+    position: absolute;
+    top: 42px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+
+    .check {
+      background-color: white;
+
+      .group {
+        padding: 10px;
+      }
+
+      .button {
+        padding: 5px;
+        text-align: center;
+      }
+    }
+
+    .isBottom {
+      height: 60px;
+      line-height: 60px;
+      text-align: center;
+      background-color: #eee;
+    }
+
+    .loading {
+      height: 60px;
+      position: relative;
+
+      :global {
+        .ant-spin {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+
+    .listItem {
+      height: 110px;
+      border: 5px solid white;
+      border-top: none;
+      min-height: 10vh;
+      position: relative;
+
+      img {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        border-radius: 40px;
+        top: 10px;
+        left: 10px;
+      }
+
+      .name {
+        position: absolute;
+        top: 10px;
+        left: 100px;
+      }
+
+      .level {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+      }
+
+      .isTeacher {
+        opacity: 0.9;
+        font-size: 12px;
+        position: absolute;
+        bottom: 10px;
+        left: 100px;
+        display: flex;
+        align-items: center;
+      }
+
+      .action {
+        opacity: 0.9;
+        font-size: 12px;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+      }
+
+      .canTeach {
+        line-height: 16px;
+        font-size: 12px;
+        position: absolute;
+        left: 100px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: calc(100% - 100px);
+
+        span {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          background-color: greenyellow;
+          color: white;
+          margin: 0 2px;
+          text-align: center;
+          border-radius: 3px;
+        }
+
+        .lesson {
+          background: #0084c9;
+        }
+      }
+
+      &:nth-child(1) {
+        border-top: 5px solid white;
+      }
+    }
+  }
 }

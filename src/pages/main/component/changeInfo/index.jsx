@@ -1,6 +1,6 @@
 import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import { cloneDeep } from 'lodash';
-import { Upload, Button, message } from 'antd';
+import { Upload, Button, message, Radio } from 'antd';
 import { Toast, InputItem, Picker } from 'antd-mobile';
 import { allArea, getAreaName } from '@/utils/const';
 import axios from '@/utils/axios';
@@ -89,6 +89,18 @@ function ChangeInfo(props, ref) {
           placeholder="请输入姓名"
           className={styles.input}
         />
+      </div>
+      <div className={styles.line}>
+        性别:
+        <Radio.Group
+          onChange={e => {
+            setNewInfo({ ...newInfo, sex: e.target.value });
+          }}
+          value={newInfo.sex}
+        >
+          <Radio value={0}>男</Radio>
+          <Radio value={1}>女</Radio>
+        </Radio.Group>
       </div>
       <div className={styles.line}>
         年龄:
