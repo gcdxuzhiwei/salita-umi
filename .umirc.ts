@@ -7,7 +7,7 @@ export default defineConfig({
   title: '家教服务平台',
   proxy: {
     '/api/upload': {
-      target: 'http://www.xuzhiwei.icu/',
+      target: 'http://xzw.link/',
       changeOrigin: true,
     },
     '/api': {
@@ -15,7 +15,7 @@ export default defineConfig({
       changeOrigin: true,
     },
     '/public': {
-      target: 'http://www.xuzhiwei.icu/',
+      target: 'http://xzw.link/',
       changeOrigin: true,
     },
   },
