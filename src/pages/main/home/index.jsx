@@ -122,6 +122,7 @@ function Home() {
     realOption.current.group1 = group1;
     realOption.current.group2 = group2;
     realOption.current.group3 = group3;
+    realOption.current.lastTime = 0;
     setList([]);
     setIsBottom(false);
     setOpen(false);
