@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NoticeBar, Drawer, Toast } from 'antd-mobile';
 import { Checkbox, Button, Spin } from 'antd';
+import { history } from 'umi';
 import moment from 'moment';
 import InfiniteScroll from 'react-infinite-scroller';
 import axios from '@/utils/axios';
@@ -183,7 +184,13 @@ function Home() {
             >
               <>
                 {list.map(v => (
-                  <div key={v.userId} className={styles.listItem}>
+                  <div
+                    onClick={() => {
+                      history.push(`/detail/${v.userId}`);
+                    }}
+                    key={v.userId}
+                    className={styles.listItem}
+                  >
                     <img src={'/public/' + v.avatar} />
                     <div className={styles.name}>
                       {v.name}&nbsp; ({v.sex ? '女' : '男'})
@@ -202,10 +209,12 @@ function Home() {
                     <div className={styles.canTeach}>
                       可授年级、学科:
                       {v.group1.split('').map(p => (
-                        <span>{p}</span>
+                        <span key={p}>{p}</span>
                       ))}
                       {v.group2.split('').map(p => (
-                        <span className={styles.lesson}>{p}</span>
+                        <span key={p} className={styles.lesson}>
+                          {p}
+                        </span>
                       ))}
                     </div>
                   </div>

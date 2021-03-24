@@ -67,7 +67,7 @@ export default defineConfig({
       component: '@/pages/join',
     },
     {
-      path: '/detail',
+      path: '/detail/:id',
       component: '@/pages/detail',
     },
     {
