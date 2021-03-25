@@ -71,6 +71,10 @@ export default defineConfig({
       component: '@/pages/detail',
     },
     {
+      path: '/reserve',
+      component: '@/pages/reserve',
+    },
+    {
       path: '/demo',
       component: '@/pages/demo',
     },

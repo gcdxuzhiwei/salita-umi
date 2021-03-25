@@ -5,9 +5,10 @@ import {
   CarryOutOutlined,
   CheckCircleOutlined,
 } from '@ant-design/icons';
-import { Toast, List, TextareaItem } from 'antd-mobile';
+import { Toast, List, TextareaItem, Modal } from 'antd-mobile';
 import moment from 'moment';
 import axios from '@/utils/axios';
+import { getUmiCookie } from '@/utils/const';
 import styles from './index.less';
 
 const { Meta } = Card;
@@ -15,6 +16,8 @@ const { Meta } = Card;
 function Detail(props) {
   const [loading, setLoading] = useState(true);
   const [info, setInfo] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalInput, setModalInput] = useState('');
 
   useEffect(() => {
     getData(...props.history.location.pathname.split('/').slice(-1));
@@ -36,6 +39,37 @@ function Detail(props) {
     }
   };
 
+  const hanlePost = () => {
+    if (!getUmiCookie()) {
+      Toast.fail('请先前往我的页面登录');
+      return;
+    }
+    setModalInput('');
+    setShowModal(true);
+  };
+
+  const pressPost = async () => {
+    if (!modalInput.length) {
+      Toast.fail('请先输入内容');
+      return;
+    }
+    Toast.loading();
+    try {
+      const { data } = await axios.post('/api/user/reserve', {
+        teacher: props.history.location.pathname.split('/').slice(-1)[0],
+        remark: modalInput,
+      });
+      if (data.success) {
+        Toast.success('预约成功');
+        setShowModal(false);
+      } else {
+        Toast.fail(data.err);
+      }
+    } catch {
+      Toast.fail('网络异常');
+    }
+  };
+
   return (
     <>
       <Card
@@ -44,14 +78,29 @@ function Detail(props) {
         bordered={false}
         actions={
           !loading && [
-            <>
+            <div
+              style={{
+                height: 40,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
               <CommentOutlined />
               联系TA
-            </>,
-            <>
+            </div>,
+            <div
+              style={{
+                height: 40,
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+              onClick={hanlePost}
+            >
               <CarryOutOutlined />
               预约课程
-            </>,
+            </div>,
           ]
         }
       >
@@ -131,23 +180,40 @@ function Detail(props) {
                 </List.Item>
               </List>
               <List renderHeader="自我介绍" className="antbody">
-                <pre>
-                  {info.introduce +
-                    info.introduce +
-                    info.introduce +
-                    info.introduce +
-                    info.introduce +
-                    info.introduce +
-                    info.introduce +
-                    info.introduce +
-                    info.introduce +
-                    info.introduce}
-                </pre>
+                <pre>{info.introduce}</pre>
               </List>
             </>
           )}
         </Skeleton>
       </Card>
+      <Modal
+        visible={showModal}
+        transparent
+        footer={[
+          {
+            text: '取消',
+            onPress: () => {
+              setShowModal(false);
+            },
+          },
+          {
+            text: '提交',
+            onPress: () => {
+              pressPost();
+            },
+          },
+        ]}
+      >
+        <TextareaItem
+          rows={4}
+          placeholder="输入课程要求和时间,并等待教师查看确认，可在我的页面查看结果"
+          count={100}
+          value={modalInput}
+          onChange={value => {
+            setModalInput(value);
+          }}
+        />
+      </Modal>
     </>
   );
 }

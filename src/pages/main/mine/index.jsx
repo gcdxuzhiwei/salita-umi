@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'umi';
 import { Spin } from 'antd';
 import { Toast, Modal } from 'antd-mobile';
+import { CarryOutOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import zh from 'moment/locale/zh-cn';
 import axios from '@/utils/axios';
@@ -74,6 +75,13 @@ function Mine() {
             <Link to="/join">
               <span>
                 <i className="iconfont icon-jiarujiazuxianxing"></i>教员入驻
+              </span>
+              <i className="iconfont icon-Group-"></i>
+            </Link>
+            <Link to="/reserve">
+              <span>
+                <i className="iconfont icon-zhaokecheng"></i>
+                我的预约
               </span>
               <i className="iconfont icon-Group-"></i>
             </Link>
