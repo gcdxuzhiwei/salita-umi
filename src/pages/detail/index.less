@@ -2,8 +2,59 @@
   position: relative;
 
   :global {
+    .antbody .am-list-body::after {
+      display: none !important;
+    }
+    pre {
+      margin-bottom: 70px;
+    }
+    .ant-card-body {
+      padding-bottom: 70px;
+      padding: 0;
+
+      .ant-card-meta {
+        padding: 24px;
+      }
+
+      .ant-card-meta-avatar {
+        padding: 0;
+        width: 48px;
+        height: 48px;
+
+        img,
+        .ant-avatar {
+          margin: 0;
+          width: 48px;
+          height: 48px;
+          border-radius: 24px;
+        }
+      }
+
+      .ant-card-meta-detail {
+        padding-left: 16px;
+      }
+
+      .am-list-extra {
+        flex-basis: 70%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        span {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          font-size: 12px;
+          line-height: 16px;
+          color: white;
+          margin: 0 2px;
+          text-align: center;
+          border-radius: 3px;
+        }
+      }
+    }
     .ant-card-actions {
-      position: absolute;
+      position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
