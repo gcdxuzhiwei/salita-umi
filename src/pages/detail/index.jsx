@@ -5,6 +5,7 @@ import {
   CarryOutOutlined,
   CheckCircleOutlined,
 } from '@ant-design/icons';
+import { history } from 'umi';
 import { Toast, List, TextareaItem, Modal } from 'antd-mobile';
 import moment from 'moment';
 import axios from '@/utils/axios';
@@ -18,6 +19,7 @@ function Detail(props) {
   const [info, setInfo] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [modalInput, setModalInput] = useState('');
+  const [command, setCommand] = useState([]);
 
   useEffect(() => {
     getData(...props.history.location.pathname.split('/').slice(-1));
@@ -30,6 +32,7 @@ function Detail(props) {
       });
       if (data.retdata) {
         setInfo(data.retdata);
+        setCommand(data.retdata.command);
         setLoading(false);
       } else {
         Toast.fail(data.err);
@@ -84,6 +87,17 @@ function Detail(props) {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
+              }}
+              onClick={() => {
+                if (!getUmiCookie()) {
+                  Toast.fail('请先登录');
+                  return;
+                }
+                history.push(
+                  `/chat/${
+                    props.history.location.pathname.split('/').slice(-1)[0]
+                  }`,
+                );
               }}
             >
               <CommentOutlined />
@@ -181,6 +195,19 @@ function Detail(props) {
               </List>
               <List renderHeader="自我介绍" className="antbody">
                 <pre>{info.introduce}</pre>
+              </List>
+              <List renderHeader="评价" className="antbody">
+                <div className={styles.command}>
+                  {!command.length && (
+                    <div className={styles.empty}>暂无评价</div>
+                  )}
+                  {command.map(v => (
+                    <React.Fragment key={v.time}>
+                      <div>{moment(v.time).fromNow()}:</div>
+                      <div>{v.detail}</div>
+                    </React.Fragment>
+                  ))}
+                </div>
               </List>
             </>
           )}

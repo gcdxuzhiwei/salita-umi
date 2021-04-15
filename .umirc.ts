@@ -71,6 +71,10 @@ export default defineConfig({
       component: '@/pages/detail',
     },
     {
+      path: '/chat/:id',
+      component: '@/pages/chat',
+    },
+    {
       path: '/reserve',
       component: '@/pages/reserve',
     },

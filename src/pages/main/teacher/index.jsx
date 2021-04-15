@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Checkbox, Spin, Button } from 'antd';
+import { Checkbox, Spin, Button, Modal } from 'antd';
 import { Toast, TextareaItem } from 'antd-mobile';
 import axios from '@/utils/axios';
 import styles from './index.less';
@@ -11,9 +11,12 @@ function Teacher() {
   const [visible, setVisible] = useState(0);
   const [introduce, setIntroduce] = useState('');
   const [canPub, setCanPub] = useState(true);
+  const [list, setList] = useState([]);
+  const [loadingList, setLoadingList] = useState(true);
 
   useEffect(() => {
     getInfo();
+    getList();
   }, []);
 
   const getInfo = async () => {
@@ -26,6 +29,21 @@ function Teacher() {
       setVisible(res.visible);
       setIntroduce(res.introduce);
       setLoading(false);
+    } catch {
+      Toast.fail('网络异常');
+    }
+  };
+
+  const getList = async () => {
+    try {
+      setLoadingList(true);
+      const { data } = await axios.post('/api/user/teacherReserveList');
+      if (data.err) {
+        Toast.fail(data.err);
+        return;
+      }
+      setList(data.arr);
+      setLoadingList(false);
     } catch {
       Toast.fail('网络异常');
     }
@@ -96,72 +114,144 @@ function Teacher() {
     }
   };
 
+  const clickReserve = (student, status, name) => {
+    Modal.confirm({
+      title: `确定要 ${status === 1 ? '接受' : '拒绝'} ${name}的预约吗`,
+      onOk: () => {
+        setTimeout(() => {
+          clickReserveOk(student, status);
+        }, 0);
+      },
+    });
+  };
+
+  const clickReserveOk = async (student, status) => {
+    Toast.loading();
+    try {
+      const { data } = await axios.post('/api/user/teacherChangeReserve', {
+        student,
+        status,
+      });
+      if (data.err) {
+        Toast.fail(data.err);
+      } else {
+        Toast.success('修改成功');
+        getList();
+      }
+    } catch {
+      Toast.fail('网络异常');
+    }
+  };
+
   return (
-    <Spin spinning={loading}>
-      <div className={styles.group}>
-        可教年级:
-        <Checkbox.Group
-          value={group1.split('')}
-          onChange={g => {
-            setCanPub(false);
-            setGroup1(g.join(''));
-          }}
-          options={[
-            { label: '小学', value: '小' },
-            { label: '初中', value: '初' },
-            { label: '高中', value: '高' },
-          ]}
-        />
-      </div>
-      <div className={styles.group}>
-        可教科目:
-        <Checkbox.Group
-          value={group2.split('')}
-          onChange={g => {
-            setCanPub(false);
-            setGroup2(g.join(''));
-          }}
-          options={[
-            { label: '语文', value: '语' },
-            { label: '数学', value: '数' },
-            { label: '英语', value: '英' },
-            { label: '物理', value: '物' },
-            { label: '化学', value: '化' },
-            { label: '生物', value: '生' },
-            { label: '地理', value: '地' },
-            { label: '政治', value: '政' },
-            { label: '历史', value: '历' },
-          ]}
-        />
-      </div>
-      <div className={styles.group}>
-        自我介绍:
-        <TextareaItem
-          rows={4}
-          count={600}
-          value={introduce}
-          onChange={value => {
-            setCanPub(false);
-            setIntroduce(value);
-          }}
-        />
-      </div>
-      <div className={styles.group}>
-        <Button onClick={handleChange}>点击提交修改信息</Button>
-      </div>
-      <div className={styles.group}>
-        发布状态: {visible ? '已发布' : '未发布'}
-        {!visible ? (
-          <Button onClick={handlePub} disabled={!canPub} type="primary">
-            {canPub ? '点击发布' : '点击发布(请先提交修改)'}
-          </Button>
-        ) : (
-          <Button onClick={handleUnPub} type="danger">
-            取消发布
-          </Button>
-        )}
-      </div>
-    </Spin>
+    <>
+      <Spin spinning={loading}>
+        <div className={styles.group}>
+          可教年级:
+          <Checkbox.Group
+            value={group1.split('')}
+            onChange={g => {
+              setCanPub(false);
+              setGroup1(g.join(''));
+            }}
+            options={[
+              { label: '小学', value: '小' },
+              { label: '初中', value: '初' },
+              { label: '高中', value: '高' },
+            ]}
+          />
+        </div>
+        <div className={styles.group}>
+          可教科目:
+          <Checkbox.Group
+            value={group2.split('')}
+            onChange={g => {
+              setCanPub(false);
+              setGroup2(g.join(''));
+            }}
+            options={[
+              { label: '语文', value: '语' },
+              { label: '数学', value: '数' },
+              { label: '英语', value: '英' },
+              { label: '物理', value: '物' },
+              { label: '化学', value: '化' },
+              { label: '生物', value: '生' },
+              { label: '地理', value: '地' },
+              { label: '政治', value: '政' },
+              { label: '历史', value: '历' },
+            ]}
+          />
+        </div>
+        <div className={styles.group}>
+          自我介绍:
+          <TextareaItem
+            rows={4}
+            count={600}
+            value={introduce}
+            onChange={value => {
+              setCanPub(false);
+              setIntroduce(value);
+            }}
+          />
+        </div>
+        <div className={styles.group}>
+          <Button onClick={handleChange}>点击提交修改信息</Button>
+        </div>
+        <div className={styles.group}>
+          发布状态: {visible ? '已发布' : '未发布'}
+          {!visible ? (
+            <Button onClick={handlePub} disabled={!canPub} type="primary">
+              {canPub ? '点击发布' : '点击发布(请先提交修改)'}
+            </Button>
+          ) : (
+            <Button onClick={handleUnPub} type="danger">
+              取消发布
+            </Button>
+          )}
+        </div>
+      </Spin>
+      <Spin spinning={loadingList}>
+        <div className={styles.list}>
+          {list.map(v => (
+            <div className={styles.item} key={v.time}>
+              <div className={styles.left}>
+                <div>
+                  {v.info.name} {v.info.sex === 0 ? '男' : '女'} {v.info.age}
+                </div>
+                <div>
+                  {v.info.area} {v.info.phone}
+                </div>
+                <div>{v.remark}</div>
+              </div>
+              <div className={styles.right}>
+                {v.status === 0 ? (
+                  <>
+                    <Button
+                      type="primary"
+                      onClick={() => {
+                        clickReserve(v.student, 1, v.info.name);
+                      }}
+                    >
+                      接受
+                    </Button>
+                    <Button
+                      type="danger"
+                      onClick={() => {
+                        clickReserve(v.student, -1, v.info.name);
+                      }}
+                    >
+                      拒绝
+                    </Button>
+                  </>
+                ) : (
+                  <Button disabled>已{v.status === 1 ? '接受' : '拒绝'}</Button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </Spin>
+    </>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Spin, List } from 'antd';
+import { Spin, List, Modal, Input } from 'antd';
 import { Toast } from 'antd-mobile';
 import axios from '@/utils/axios';
 import styles from './index.less';
@@ -7,6 +7,8 @@ import styles from './index.less';
 function Reserve() {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     getData();
@@ -24,6 +26,34 @@ function Reserve() {
         if (!data.arr.length) {
           Toast.success('无预约记录');
         }
+      }
+    } catch {
+      Toast.fail('网络异常');
+    }
+  };
+
+  const command = teacher => {
+    setShowModal(teacher);
+  };
+
+  const handleCommand = async () => {
+    if (!inputValue) {
+      Toast.fail('请输入内容');
+      return;
+    }
+    try {
+      Toast.loading();
+      const { data } = await axios.post('/api/user/commandByReserve', {
+        teacher: showModal,
+        command: inputValue,
+      });
+      if (data.err) {
+        Toast.fail(data.err);
+      } else {
+        Toast.hide();
+        setInputValue('');
+        setShowModal(false);
+        getData();
       }
     } catch {
       Toast.fail('网络异常');
@@ -49,11 +79,44 @@ function Reserve() {
                   : v.status === 0
                   ? '预约中'
                   : '预约失败'}
+                {v.status === 1 &&
+                  (v.command === 0 ? (
+                    <div
+                      onClick={() => {
+                        command(v.teacher);
+                      }}
+                    >
+                      点击评价
+                    </div>
+                  ) : (
+                    <div>已经评价</div>
+                  ))}
               </span>
             </div>
           </List.Item>
         ))}
       </List>
+      <Modal
+        visible={showModal}
+        closable={false}
+        onCancel={() => {
+          setShowModal(false);
+          setInputValue('');
+        }}
+        onOk={() => {
+          setTimeout(() => {
+            handleCommand();
+          }, 0);
+        }}
+      >
+        <Input
+          placeholder="输入评价内容"
+          value={inputValue}
+          onChange={e => {
+            setInputValue(e.target.value);
+          }}
+        />
+      </Modal>
     </Spin>
   );
 }
