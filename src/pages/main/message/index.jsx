@@ -71,7 +71,7 @@ function Message() {
           b.detail[b.detail.length - 1].time -
           a.detail[a.detail.length - 1].time,
       );
-      setShowList([...hasData, ...noData]);
+      setShowList([...hasData, ...noData.reverse()]);
     } catch (e) {
       console.log(e);
     }
