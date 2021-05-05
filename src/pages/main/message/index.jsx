@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { Link } from 'umi';
 import { history } from 'umi';
 import axios from '@/utils/axios';
 import moment from 'moment';
+import { getUmiCookie } from '@/utils/const';
 import { Toast } from 'antd-mobile';
 import { io } from 'socket.io-client';
 import styles from './index.less';
@@ -10,6 +12,7 @@ let socket;
 let interval;
 
 function Message() {
+  const login = useRef(!!getUmiCookie());
   const [userId, setUserId] = useState('');
   const [list, setList] = useState({
     old: [],
@@ -18,7 +21,9 @@ function Message() {
   const [showList, setShowList] = useState([]);
 
   useEffect(() => {
-    getUserId();
+    if (login.current) {
+      getUserId();
+    }
   }, []);
 
   useEffect(() => {
@@ -108,35 +113,43 @@ function Message() {
 
   return (
     <>
-      {showList.map(v => {
-        return (
-          <div
-            key={v.room}
-            className={styles.item}
-            onClick={() => {
-              for (let i in v) {
-                if (i.length === userId.length && i !== userId) {
-                  history.push(`/chat/${i}`);
-                  return;
-                }
-              }
-            }}
-          >
-            <img src={`/public/${v.avatar}`} />
-            <div className={styles.name}>{v.name}</div>
-            {v.detail.length > 0 && (
-              <div className={styles.time}>
-                {moment(v.detail[v.detail.length - 1].time).fromNow()}
+      {!login.current ? (
+        <Link to="/login" className={styles.login}>
+          登录/注册
+        </Link>
+      ) : (
+        <>
+          {showList.map(v => {
+            return (
+              <div
+                key={v.room}
+                className={styles.item}
+                onClick={() => {
+                  for (let i in v) {
+                    if (i.length === userId.length && i !== userId) {
+                      history.push(`/chat/${i}`);
+                      return;
+                    }
+                  }
+                }}
+              >
+                <img src={`/public/${v.avatar}`} />
+                <div className={styles.name}>{v.name}</div>
+                {v.detail.length > 0 && (
+                  <div className={styles.time}>
+                    {moment(v.detail[v.detail.length - 1].time).fromNow()}
+                  </div>
+                )}
+                {v.detail.length > 0 && (
+                  <div className={styles.info}>
+                    {v.detail[v.detail.length - 1].info}
+                  </div>
+                )}
               </div>
-            )}
-            {v.detail.length > 0 && (
-              <div className={styles.info}>
-                {v.detail[v.detail.length - 1].info}
-              </div>
-            )}
-          </div>
-        );
-      })}
+            );
+          })}
+        </>
+      )}
     </>
   );
 }

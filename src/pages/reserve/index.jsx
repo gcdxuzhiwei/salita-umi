@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Spin, List, Modal, Input } from 'antd';
 import { Toast } from 'antd-mobile';
+import { history } from 'umi';
 import axios from '@/utils/axios';
 import styles from './index.less';
 
@@ -91,6 +92,15 @@ function Reserve() {
                   ) : (
                     <div>已经评价</div>
                   ))}
+                {v.status === 1 && (
+                  <div
+                    onClick={() => {
+                      history.push(`/chat/${v.info.userId}`);
+                    }}
+                  >
+                    售后
+                  </div>
+                )}
               </span>
             </div>
           </List.Item>
